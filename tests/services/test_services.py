@@ -21,7 +21,12 @@ banners = {
         "message": "active",
         "url_path": "/active",
         "category": "info",
-        "end_datetime": datetime.utcnow() + timedelta(days=1),
+        "start_datetime": (datetime.utcnow() - timedelta(days=1)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
+        "end_datetime": (datetime.utcnow() + timedelta(days=1)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
         "active": True,
     },
     "inactive": {
@@ -34,28 +39,36 @@ banners = {
         "message": "other",
         "url_path": "/other",
         "category": "warning",
-        "end_datetime": datetime.utcnow() + timedelta(days=5),
+        "end_datetime": (datetime.utcnow() + timedelta(days=5)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
         "active": True,
     },
     "expired": {
         "message": "expired",
         "url_path": "/expired",
         "category": "info",
-        "end_datetime": datetime.utcnow() - timedelta(days=1),
+        "end_datetime": (datetime.utcnow() - timedelta(days=1)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
         "active": True,
     },
     "sub_records_only": {
         "message": "sub_records_only",
         "url_path": "/resources/sub",
         "category": "warning",
-        "start_datetime": datetime.utcnow() - timedelta(days=1),
+        "start_datetime": (datetime.utcnow() - timedelta(days=1)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
         "active": True,
     },
     "records_only": {
         "message": "records_only",
         "url_path": "/resources",
         "category": "info",
-        "start_datetime": datetime.utcnow() - timedelta(days=1),
+        "start_datetime": (datetime.utcnow() - timedelta(days=1)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
         "active": True,
     },
 }

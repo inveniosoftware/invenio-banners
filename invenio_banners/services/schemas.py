@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 
 from invenio_records_resources.services.records.schema import BaseRecordSchema
 from marshmallow import fields, pre_load
-from marshmallow_utils.fields import TZDateTime, SanitizedHTML
+from marshmallow_utils.fields import SanitizedHTML, TZDateTime
 
 
 class BannerSchema(BaseRecordSchema):
