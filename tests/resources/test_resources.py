@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2022 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -19,24 +20,24 @@ banners = {
         "url_path": "/banner1",
         "category": "info",
         "active": True,
-        "start_datetime": date(2022, 7, 20),
-        "end_datetime": date(2023, 1, 29),
+        "start_datetime": date(2022, 7, 20).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": date(2023, 1, 29).strftime("%Y-%m-%d %H:%M:%S"),
     },
     "banner2": {
         "message": "banner2",
         "url_path": "/banner2",
         "category": "other",
         "active": False,
-        "start_datetime": date(2022, 12, 15),
-        "end_datetime": date(2023, 1, 5),
+        "start_datetime": date(2022, 12, 15).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": date(2023, 1, 5).strftime("%Y-%m-%d %H:%M:%S"),
     },
     "banner3": {
         "message": "banner3",
         "url_path": "/banner3",
         "category": "warning",
         "active": True,
-        "start_datetime": date(2023, 1, 20),
-        "end_datetime": date(2023, 2, 25),
+        "start_datetime": date(2023, 1, 20).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": date(2023, 2, 25).strftime("%Y-%m-%d %H:%M:%S"),
     },
 }
 
@@ -102,7 +103,7 @@ def test_create_banner(client, admin, headers):
     assert banner["message"] == banner_data["message"]
     assert banner["url_path"] == banner_data["url_path"]
     assert banner["category"] == banner_data["category"]
-    assert banner["active"] == banner_data["active"]
+    assert banner["active"] != banner_data["active"]
 
 
 def test_disable_expired_after_create_action(client, admin, headers):

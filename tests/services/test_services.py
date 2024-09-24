@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2022 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -21,7 +22,10 @@ banners = {
         "message": "active",
         "url_path": "/active",
         "category": "info",
-        "end_datetime": datetime.utcnow() + timedelta(days=1),
+        "start_datetime": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": (datetime.utcnow() + timedelta(days=1)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
         "active": True,
     },
     "inactive": {
