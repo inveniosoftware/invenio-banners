@@ -1,78 +1,88 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2022 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Banner resource tests."""
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 import pytest
+from invenio_db import db
 from invenio_records_resources.services.errors import PermissionDeniedError
 
 from invenio_banners.records import BannerModel
 
 banners = {
+    "banner0": {
+        "message": "banner0",
+        "url_path": "/banner0",
+        "category": "info",
+        "active": True,
+        "start_datetime": date(2022, 7, 20).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": (datetime.utcnow() - timedelta(days=20)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
+    },
     "banner1": {
         "message": "banner1",
         "url_path": "/banner1",
         "category": "info",
         "active": True,
-        "start_datetime": date(2022, 7, 20),
-        "end_datetime": date(2023, 1, 29),
+        "start_datetime": date(2022, 7, 20).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": (datetime.utcnow() + timedelta(days=20)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
     },
     "banner2": {
         "message": "banner2",
         "url_path": "/banner2",
         "category": "other",
         "active": False,
-        "start_datetime": date(2022, 12, 15),
-        "end_datetime": date(2023, 1, 5),
+        "start_datetime": date(2022, 12, 15).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": (datetime.utcnow() + timedelta(days=10)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
     },
     "banner3": {
         "message": "banner3",
         "url_path": "/banner3",
         "category": "warning",
         "active": True,
-        "start_datetime": date(2023, 1, 20),
-        "end_datetime": date(2023, 2, 25),
+        "start_datetime": date(2023, 1, 20).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": (datetime.utcnow() + timedelta(days=30)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
     },
 }
 
 
 def _create_banner(client, data, headers, status_code=None):
     """Send POST request."""
-    result = client.post(
-        "/banners/",
-        headers=headers,
-        json=data,
-    )
+    result = client.post("/banners/", headers=headers, json=data)
     assert result.status_code == status_code
     return result
 
 
 def _update_banner(client, id, data, headers, status_code=None):
     """Send PUT request."""
-    result = client.put(
-        "/banners/{0}".format(id),
-        headers=headers,
-        json=data,
-    )
+    result = client.put(f"/banners/{id}", headers=headers, json=data)
     assert result.status_code == status_code
     return result
 
 
 def _delete_banner(client, id, headers, status_code=None):
     """Send DELETE request."""
-    result = client.delete("/banners/{0}".format(id), headers=headers)
+    result = client.delete(f"/banners/{id}", headers=headers)
     assert result.status_code == status_code
     return result
 
 
 def _get_banner(client, id, status_code=None):
     """Send GET request."""
-    result = client.get("/banners/{0}".format(id))
+    result = client.get(f"/banners/{id}")
     assert result.status_code == status_code
     return result
 
@@ -108,15 +118,15 @@ def test_create_banner(client, admin, headers):
 def test_disable_expired_after_create_action(client, admin, headers):
     """Disable expired banners after a create a banner action."""
     # create banner first
-    banner1 = BannerModel.create(banners["banner1"])
-    assert banner1.active is True
+    banner0 = BannerModel.create(banners["banner0"])
+    assert banner0.active is True
     banner_data = banners["banner2"]
 
     admin.login(client)
 
     _create_banner(client, banner_data, headers, 201).json
 
-    expired_banner = BannerModel.get(banner1.id)
+    expired_banner = BannerModel.get(banner0.id)
     assert expired_banner.active is False
 
 
@@ -145,9 +155,9 @@ def test_update_banner(client, admin, headers):
 def test_disable_expired_after_update_action(client, admin, headers):
     """Disable expired banners after an update a banner action."""
     # create banner first
-    banner1 = BannerModel.create(banners["banner1"])
+    banner0 = BannerModel.create(banners["banner0"])
     banner2 = BannerModel.create(banners["banner2"])
-    assert banner1.active is True
+    assert banner0.active is True
 
     admin.login(client)
 
@@ -160,7 +170,7 @@ def test_disable_expired_after_update_action(client, admin, headers):
 
     _update_banner(client, banner2.id, new_data, headers, 200).json
 
-    expired_banner = BannerModel.get(banner1.id)
+    expired_banner = BannerModel.get(banner0.id)
     assert expired_banner.active is False
 
 
@@ -200,7 +210,7 @@ def test_delete_banner(client, admin, headers):
     _delete_banner(client, banner.id, headers, 204)
 
     # check that it's not present in db
-    assert BannerModel.query.filter_by(id=banner.id).one_or_none() is None
+    assert db.session.query(BannerModel).filter_by(id=banner.id).one_or_none() is None
 
 
 def test_delete_is_forbidden(client, user, headers):

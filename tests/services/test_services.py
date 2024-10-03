@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2022 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -10,6 +11,7 @@
 from datetime import datetime, timedelta
 
 import pytest
+from invenio_db import db
 from invenio_records_resources.services.errors import PermissionDeniedError
 
 from invenio_banners.proxies import current_banners_service as service
@@ -21,7 +23,10 @@ banners = {
         "message": "active",
         "url_path": "/active",
         "category": "info",
-        "end_datetime": datetime.utcnow() + timedelta(days=1),
+        "start_datetime": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": (datetime.utcnow() + timedelta(days=1)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
         "active": True,
     },
     "inactive": {
@@ -127,7 +132,7 @@ def test_delete_banner(app, superuser_identity):
     service.delete(superuser_identity, banner.id)
 
     # check that it's not present in db
-    assert BannerModel.query.filter_by(id=banner.id).one_or_none() is None
+    assert db.session.query(BannerModel).filter_by(id=banner.id).one_or_none() is None
 
 
 def test_delete_is_forbidden(app, simple_user_identity):
@@ -150,7 +155,7 @@ def test_delete_non_existing_banner(app, superuser_identity):
 def test_read_banner(app, simple_user_identity):
     """Read a banner by id."""
     # create banner first
-    banner = BannerModel.create(banners["active"])
+    banner = BannerModel.create(banners["other"])
 
     banner_result = service.read(simple_user_identity, banner.id)
 
@@ -207,11 +212,12 @@ def test_disable_expired_banners(app, superuser_identity):
     BannerModel.create(banners["expired"])
     BannerModel.create(banners["active"])
 
-    assert BannerModel.query.filter(BannerModel.active.is_(True)).count() == 2
-
+    assert (
+        db.session.query(BannerModel).filter(BannerModel.active.is_(True)).count() == 2
+    )
     service.disable_expired(superuser_identity)
 
-    _banners = BannerModel.query.filter(BannerModel.active.is_(True)).all()
+    _banners = db.session.query(BannerModel).filter(BannerModel.active.is_(True)).all()
 
     assert len(_banners) == 1
     assert _banners[0].message == "active"

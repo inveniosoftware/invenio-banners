@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2020-2023 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -24,7 +25,6 @@ class BannerModel(db.Model, Timestamp):
     """Defines a message to show to users."""
 
     __tablename__ = "banners"
-    __versioned__ = {"versioning": False}
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -51,6 +51,7 @@ class BannerModel(db.Model, Timestamp):
         """Create a new banner."""
         _categories = [t[0] for t in current_app.config["BANNERS_CATEGORIES"]]
         assert data.get("category") in _categories
+
         with db.session.begin_nested():
             obj = cls(
                 message=data.get("message"),
@@ -62,14 +63,13 @@ class BannerModel(db.Model, Timestamp):
             )
             db.session.add(obj)
 
-        db.session.commit()
         return obj
 
     @classmethod
     def update(cls, data, id):
         """Update an existing banner."""
         with db.session.begin_nested():
-            cls.query.filter_by(id=id).update(data)
+            db.session.query(cls).filter_by(id=id).update(data)
 
         db.session.commit()
 
@@ -77,7 +77,7 @@ class BannerModel(db.Model, Timestamp):
     def get(cls, id):
         """Get banner by its id."""
         try:
-            return cls.query.filter_by(id=id).one()
+            return db.session.query(cls).filter_by(id=id).one()
         except NoResultFound:
             raise BannerNotExistsError(id)
 
@@ -87,15 +87,14 @@ class BannerModel(db.Model, Timestamp):
         with db.session.begin_nested():
             db.session.delete(banner)
 
-        db.session.commit()
-
     @classmethod
     def get_active(cls, url_path):
         """Return active banners."""
         now = datetime.utcnow()
 
         query = (
-            cls.query.filter(cls.active.is_(True))
+            db.session.query(cls)
+            .filter(cls.active.is_(True))
             .filter(cls.start_datetime <= now)
             .filter((cls.end_datetime.is_(None)) | (now <= cls.end_datetime))
         )
@@ -113,16 +112,17 @@ class BannerModel(db.Model, Timestamp):
     @classmethod
     def search(cls, search_params, filters):
         """Filter banners accordingly to query params."""
-        banners = (
-            BannerModel.query.filter(or_(*filters))
-            .order_by(
-                search_params["sort_direction"](text(",".join(search_params["sort"])))
-            )
-            .paginate(
-                page=search_params["page"],
-                per_page=search_params["size"],
-                error_out=False,
-            )
+        if filters == []:
+            filtered = db.session.query(BannerModel).filter()
+        else:
+            filtered = db.session.query(BannerModel).filter(or_(*filters))
+
+        banners = filtered.order_by(
+            search_params["sort_direction"](text(",".join(search_params["sort"])))
+        ).paginate(
+            page=search_params["page"],
+            per_page=search_params["size"],
+            error_out=False,
         )
 
         return banners
@@ -133,7 +133,8 @@ class BannerModel(db.Model, Timestamp):
         now = datetime.utcnow()
 
         query = (
-            cls.query.filter(cls.active.is_(True))
+            db.session.query(cls)
+            .filter(cls.active.is_(True))
             .filter(cls.end_datetime.isnot(None))
             .filter(cls.end_datetime < now)
         )
