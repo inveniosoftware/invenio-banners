@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2023 CERN.
+# Copyright (C) 2024 KTH Royal Institute of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -22,8 +23,8 @@ class BannerListView(AdminResourceListView):
     api_endpoint = "/banners"
     name = "banners"
     resource_config = "banners_resource"
-    title = "Banners"
-    menu_label = "Banners"
+    title = _("Banners")
+    menu_label = _("Banners")
     category = _("Site management")
     pid_path = "id"
     icon = "newspaper"
@@ -127,7 +128,7 @@ class BannerEditView(AdminResourceEditView):
     resource_config = "banners_resource"
     pid_path = "id"
     api_endpoint = "/banners"
-    title = "Edit Banner"
+    title = _("Edit Banner")
 
     list_view_name = "banners"
 
@@ -146,7 +147,7 @@ class BannerCreateView(AdminResourceCreateView):
     resource_config = "banners_resource"
     pid_path = "id"
     api_endpoint = "/banners"
-    title = "Create Banner"
+    title = _("Create Banner")
 
     list_view_name = "banners"
 
@@ -162,7 +163,7 @@ class BannerDetailView(AdminResourceDetailView):
     api_endpoint = "/banners"
     name = "banner-details"
     resource_config = "banners_resource"
-    title = "Banner Details"
+    title = _("Banner Details")
 
     display_delete = True
     display_edit = True
