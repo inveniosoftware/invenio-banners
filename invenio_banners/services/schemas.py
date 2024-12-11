@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2022-2023 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Banners schema."""
 
-from datetime import datetime, timezone
+from datetime import timezone
 
+from invenio_db import now
 from invenio_records_resources.services.records.schema import BaseRecordSchema
 from marshmallow import fields, pre_load
 from marshmallow_utils.fields import SanitizedHTML, TZDateTime
@@ -22,7 +24,7 @@ class BannerSchema(BaseRecordSchema):
     category = fields.String(required=True, metadata={"default": "info"})
     start_datetime = fields.DateTime(
         required=True,
-        metadata={"default": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")},
+        metadata={"default": now().strftime("%Y-%m-%d %H:%M:%S")},
     )
     end_datetime = fields.DateTime(allow_none=True)
     active = fields.Boolean(required=True, metadata={"default": True})

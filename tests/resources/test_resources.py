@@ -7,10 +7,10 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Banner resource tests."""
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 import pytest
-from invenio_db import db
+from invenio_db import db, now
 from invenio_records_resources.services.errors import PermissionDeniedError
 
 from invenio_banners.records import BannerModel
@@ -22,9 +22,7 @@ banners = {
         "category": "info",
         "active": True,
         "start_datetime": date(2022, 7, 20).strftime("%Y-%m-%d %H:%M:%S"),
-        "end_datetime": (datetime.utcnow() - timedelta(days=20)).strftime(
-            "%Y-%m-%d %H:%M:%S"
-        ),
+        "end_datetime": (now() - timedelta(days=20)).strftime("%Y-%m-%d %H:%M:%S"),
     },
     "banner1": {
         "message": "banner1",
@@ -32,9 +30,7 @@ banners = {
         "category": "info",
         "active": True,
         "start_datetime": date(2022, 7, 20).strftime("%Y-%m-%d %H:%M:%S"),
-        "end_datetime": (datetime.utcnow() + timedelta(days=20)).strftime(
-            "%Y-%m-%d %H:%M:%S"
-        ),
+        "end_datetime": (now() + timedelta(days=20)).strftime("%Y-%m-%d %H:%M:%S"),
     },
     "banner2": {
         "message": "banner2",
@@ -42,9 +38,7 @@ banners = {
         "category": "other",
         "active": False,
         "start_datetime": date(2022, 12, 15).strftime("%Y-%m-%d %H:%M:%S"),
-        "end_datetime": (datetime.utcnow() + timedelta(days=10)).strftime(
-            "%Y-%m-%d %H:%M:%S"
-        ),
+        "end_datetime": (now() + timedelta(days=10)).strftime("%Y-%m-%d %H:%M:%S"),
     },
     "banner3": {
         "message": "banner3",
@@ -52,9 +46,7 @@ banners = {
         "category": "warning",
         "active": True,
         "start_datetime": date(2023, 1, 20).strftime("%Y-%m-%d %H:%M:%S"),
-        "end_datetime": (datetime.utcnow() + timedelta(days=30)).strftime(
-            "%Y-%m-%d %H:%M:%S"
-        ),
+        "end_datetime": (now() + timedelta(days=30)).strftime("%Y-%m-%d %H:%M:%S"),
     },
     "html_banner": {
         "message": '<h1>HTML aware banner.</h1>.\n \'<p class="test">paragraph<br /></p><script '
@@ -146,7 +138,7 @@ def test_update_banner(client, admin, headers):
     admin.login(client)
 
     new_data = {
-        "start_datetime": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+        "start_datetime": now().strftime("%Y-%m-%d %H:%M:%S"),
         "active": True,
         "message": "New banner message",
         "category": "info",
@@ -170,7 +162,7 @@ def test_disable_expired_after_update_action(client, admin, headers):
     admin.login(client)
 
     new_data = {
-        "start_datetime": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+        "start_datetime": now().strftime("%Y-%m-%d %H:%M:%S"),
         "active": True,
         "message": "New banner message",
         "category": "info",

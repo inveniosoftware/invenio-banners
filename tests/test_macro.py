@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2020-2023 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Test views."""
 
-from datetime import datetime
 
-import pytest
-from flask import url_for
+from invenio_db import now
 
 from invenio_banners.records.models import BannerModel
 from invenio_banners.utils import style_category
@@ -23,7 +22,7 @@ def _create_banner(message, category, url_path=None):
             "message": message,
             "category": category,
             "url_path": url_path,
-            "start_datetime": datetime.utcnow(),
+            "start_datetime": now(),
             "active": True,
         }
     )

@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2020-2023 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Test models."""
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 import pytest
+from invenio_db import now
 
 from invenio_banners.records.models import BannerModel
 from invenio_banners.services.errors import BannerNotExistsError
@@ -19,49 +21,49 @@ banners = {
         "message": "valid",
         "url_path": "/valid",
         "category": "info",
-        "end_datetime": datetime.utcnow() + timedelta(days=1),
+        "end_datetime": now() + timedelta(days=1),
         "active": True,
     },
     "everywhere": {
         "message": "everywhere",
         "url_path": None,
         "category": "info",
-        "start_datetime": datetime.utcnow() - timedelta(days=1),
+        "start_datetime": now() - timedelta(days=1),
         "active": True,
     },
     "with_end_datetime": {
         "message": "with_end_datetime",
         "url_path": "/with_end_datetime",
         "category": "info",
-        "end_datetime": datetime.utcnow() - timedelta(days=1),
+        "end_datetime": now() - timedelta(days=1),
         "active": True,
     },
     "records_only": {
         "message": "records_only",
         "url_path": "/resources",
         "category": "info",
-        "start_datetime": datetime.utcnow() - timedelta(days=1),
+        "start_datetime": now() - timedelta(days=1),
         "active": True,
     },
     "sub_records_only": {
         "message": "sub_records_only",
         "url_path": "/resources/sub",
         "category": "warning",
-        "start_datetime": datetime.utcnow() - timedelta(days=1),
+        "start_datetime": now() - timedelta(days=1),
         "active": True,
     },
     "disabled": {
         "message": "disabled",
         "url_path": "/disabled",
         "category": "info",
-        "start_datetime": datetime.utcnow() - timedelta(days=1),
+        "start_datetime": now() - timedelta(days=1),
         "active": False,
     },
     "expired": {
         "message": "expired",
         "url_path": "/expired",
         "category": "warning",
-        "end_datetime": datetime.utcnow() - timedelta(days=1),
+        "end_datetime": now() - timedelta(days=1),
         "active": True,
     },
 }
