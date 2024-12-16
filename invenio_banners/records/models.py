@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2020-2023 CERN.
-# Copyright (C) 2024-2025 Graz University of Technology.
+# Copyright (C) 2024-2026 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -15,12 +15,11 @@ from flask import current_app
 from invenio_db import db
 from sqlalchemy import or_
 from sqlalchemy.sql import text
-from sqlalchemy_utils.models import Timestamp
 
 from ..resources.errors import BannerNotExistsError
 
 
-class BannerModel(db.Model, Timestamp):
+class BannerModel(db.Model, db.Timestamp):
     """Defines a message to show to users."""
 
     __tablename__ = "banners"
@@ -36,10 +35,12 @@ class BannerModel(db.Model, Timestamp):
     category = db.Column(db.String(20), nullable=False)
     """Category of the message, for styling messages per category."""
 
-    start_datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    start_datetime = db.Column(
+        db.UTCDateTime, nullable=False, default=lambda: datetime.now(timezone.utc)
+    )
     """Start date and time (UTC), can be immediate or delayed."""
 
-    end_datetime = db.Column(db.DateTime, nullable=True)
+    end_datetime = db.Column(db.UTCDateTime, nullable=True)
     """End date and time (UTC), must be after `start` or forever if null."""
 
     active = db.Column(db.Boolean(name="active"), nullable=False, default=True)
@@ -90,7 +91,7 @@ class BannerModel(db.Model, Timestamp):
     @classmethod
     def get_active(cls, url_path):
         """Return active banners."""
-        now = datetime.now(timezone.utc).replace(tzinfo=None)
+        now = datetime.now(timezone.utc)
 
         query = (
             db.session.query(cls)
@@ -130,7 +131,7 @@ class BannerModel(db.Model, Timestamp):
     @classmethod
     def disable_expired(cls):
         """Disable any old still active messages to keep everything clean."""
-        now = datetime.now(timezone.utc).replace(tzinfo=None)
+        now = datetime.now(timezone.utc)
 
         query = (
             db.session.query(cls)
