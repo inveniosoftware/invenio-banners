@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v4.1.0 (released 2025-01-22)
+
+- templates: pass ui classes through macro parameters
+
 Version v4.0.0 (released 2024-12-10)
 
 - setup: change to reusable workflows
