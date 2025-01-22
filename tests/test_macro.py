@@ -51,19 +51,18 @@ def test_jinja_macro(app, db):
     # add one banner
     EXPECTED_MSG = "Test banner info message"
     EXPECTED_CATEGORY = "info"
-    EXPECTED_STYLE = "ui info flashed top attached manage m-0 message"
+    EXPECTED_STYLE = "ui info message top attached m-0 inv-banner"
     banner = _create_banner(EXPECTED_MSG, EXPECTED_CATEGORY)
     style = style_category(banner.category)
-
     html = template.render()
     assert EXPECTED_MSG in html
-    assert style.endswith(EXPECTED_STYLE)
-    assert style in html
+    assert style.endswith(EXPECTED_CATEGORY)
+    assert EXPECTED_STYLE in html
 
     # change message and category
     EXPECTED_MSG = "Test banner warning message"
     EXPECTED_CATEGORY = "warning"
-    EXPECTED_STYLE = "ui warning flashed top attached manage m-0 message"
+    EXPECTED_STYLE = "ui warning message top attached m-0 inv-banner"
 
     banner.message = EXPECTED_MSG
     banner.category = EXPECTED_CATEGORY
@@ -73,5 +72,5 @@ def test_jinja_macro(app, db):
 
     html = template.render()
     assert EXPECTED_MSG in html
-    assert style.endswith(EXPECTED_STYLE)
-    assert style in html
+    assert style.endswith(EXPECTED_CATEGORY)
+    assert EXPECTED_STYLE in html
