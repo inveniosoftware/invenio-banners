@@ -7,6 +7,10 @@
 Changes
 =======
 
+Version v3.3.1 (released 2025-03-18)
+
+- i18n: backport missing translations
+
 Version v3.3.0 (released 2025-01-22)
 
 - templates: pass ui classes through macro parameters
