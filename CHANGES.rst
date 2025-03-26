@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v4.1.1 (released 2025-03-26)
+
+- i18n: mark missing strings for translation and push translations
+
 Version v4.1.0 (released 2025-01-22)
 
 - templates: pass ui classes through macro parameters
