@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2020-2023 CERN.
+# Copyright (C) 2025 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -12,6 +13,13 @@ from invenio_access.models import ActionRoles
 from invenio_accounts.models import Role
 from invenio_administration.permissions import administration_access_action
 from invenio_app.factory import create_api
+
+
+@pytest.fixture(scope="module")
+def app_config(app_config):
+    """Application configuration fixture."""
+    app_config["THEME_FRONTPAGE"] = False
+    return app_config
 
 
 @pytest.fixture(scope="module")
