@@ -8,7 +8,7 @@
 
 """Models."""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 import sqlalchemy as sa
 from flask import current_app
@@ -36,10 +36,12 @@ class BannerModel(db.Model, Timestamp):
     category = db.Column(db.String(20), nullable=False)
     """Category of the message, for styling messages per category."""
 
-    start_datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    start_datetime = db.Column(
+        db.UTCDateTime, nullable=False, default=lambda: datetime.now(timezone.utc)
+    )
     """Start date and time (UTC), can be immediate or delayed."""
 
-    end_datetime = db.Column(db.DateTime, nullable=True)
+    end_datetime = db.Column(db.UTCDateTime, nullable=True)
     """End date and time (UTC), must be after `start` or forever if null."""
 
     active = db.Column(db.Boolean(name="active"), nullable=False, default=True)
@@ -90,7 +92,7 @@ class BannerModel(db.Model, Timestamp):
     @classmethod
     def get_active(cls, url_path):
         """Return active banners."""
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
 
         query = (
             db.session.query(cls)
@@ -130,7 +132,7 @@ class BannerModel(db.Model, Timestamp):
     @classmethod
     def disable_expired(cls):
         """Disable any old still active messages to keep everything clean."""
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
 
         query = (
             db.session.query(cls)
