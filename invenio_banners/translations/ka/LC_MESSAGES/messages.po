@@ -10,9 +10,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: invenio-banners 4.1.0\n"
+"Project-Id-Version: invenio-banners 5.0.0\n"
 "Report-Msgid-Bugs-To: info@inveniosoftware.org\n"
-"POT-Creation-Date: 2025-02-20 13:53+0000\n"
+"POT-Creation-Date: 2025-07-08 19:41+0000\n"
 "PO-Revision-Date: 2023-06-30 09:38+0000\n"
 "Last-Translator: Tibor Simko <tibor.simko@cern.ch>, 2025\n"
 "Language-Team: Georgian (https://app.transifex.com/inveniosoftware/teams/23537/ka/)\n"
