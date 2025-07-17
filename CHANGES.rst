@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v5.1.0 (released 2025-07-17)
+
+- i18n: pulled translations
+- i18n: force pull langs
+
 Version v5.0.0 (released 2025-06-03)
 
 - setup: bump major dependencies
