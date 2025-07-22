@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v5.1.1 (released 2025-07-22)
+
+- fix: mo files not included into build
+
 Version v5.1.0 (released 2025-07-17)
 
 - i18n: pulled translations
