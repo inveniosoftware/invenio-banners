@@ -10,6 +10,6 @@
 
 from .ext import InvenioBanners
 
-__version__ = "5.1.0"
+__version__ = "5.1.1"
 
 __all__ = ("__version__", "InvenioBanners")
