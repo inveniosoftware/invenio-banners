@@ -110,9 +110,9 @@ class BannerModel(db.Model, Timestamp):
         return active_banners.all()
 
     @classmethod
-    def search(cls, search_params, filters):
+    def search(cls, search_params, filters=None):
         """Filter banners accordingly to query params."""
-        if filters == []:
+        if not filters:
             filtered = db.session.query(BannerModel).filter()
         else:
             filtered = db.session.query(BannerModel).filter(or_(*filters))
