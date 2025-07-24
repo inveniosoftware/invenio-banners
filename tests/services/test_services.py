@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2022 CERN.
+# Copyright (C) 2022-2025 CERN.
 # Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
@@ -33,6 +33,7 @@ banners = {
         "message": "inactive",
         "url_path": "/inactive",
         "category": "info",
+        "end_datetime": datetime.utcnow() + timedelta(days=5),
         "active": False,
     },
     "other": {
@@ -173,8 +174,8 @@ def test_read_non_existing_banner(app, simple_user_identity):
     assert ex.value.description == "Banner with id 1 is not found."
 
 
-def test_search_banner_with_params(app, simple_user_identity):
-    """Search for banners with parameters."""
+def test_search_banner_with_query_string(app, simple_user_identity):
+    """Search for banners with a query string."""
     # create banners first
     BannerModel.create(banners["active"])
     BannerModel.create(banners["other"])
@@ -182,7 +183,7 @@ def test_search_banner_with_params(app, simple_user_identity):
     BannerModel.create(banners["expired"])
 
     search_params = {
-        "q": "true",
+        "q": "active",
         "sort": "end_datetime",
         "size": 2,
         "sort_direction": "desc",
@@ -190,11 +191,30 @@ def test_search_banner_with_params(app, simple_user_identity):
 
     banner_list = service.search(simple_user_identity, params=search_params)
 
-    assert banner_list.total == 3
+    assert banner_list.total == 2
     result_list = banner_list.to_dict()["hits"]["hits"]
     assert len(result_list) == 2
-    assert result_list[0]["message"] == "other"
+    assert result_list[0]["message"] == "inactive"
     assert result_list[1]["message"] == "active"
+
+    search_params["size"] = 1
+    banner_list = service.search(simple_user_identity, params=search_params)
+    assert banner_list.total == 2
+    result_list = banner_list.to_dict()["hits"]["hits"]
+    assert len(result_list) == 1
+
+
+def test_search_banner_with_query_params(app, simple_user_identity):
+    """Search for banners with query parameters."""
+    # create banners first
+    BannerModel.create(banners["sub_records_only"])
+    BannerModel.create(banners["records_only"])
+
+    search_params = {"active": True, "url_path": "/resources/some_sub_page"}
+
+    banner_list = service.search(simple_user_identity, params=search_params)
+
+    assert banner_list.total == 1
 
 
 def test_search_banner_empty_list(app, simple_user_identity):

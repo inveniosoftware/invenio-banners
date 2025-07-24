@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2022 CERN.
+# Copyright (C) 2022-2025 CERN.
 # Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
@@ -63,6 +63,16 @@ banners = {
         "category": "warning",
         "active": True,
         "start_datetime": datetime(2022, 7, 20, 20, 0, 0).strftime("%Y-%m-%d %H:%M:%S"),
+    },
+    "everywhere_banner": {
+        "message": "Everywhere banner",
+        "url_path": "",
+        "category": "info",
+        "active": True,
+        "start_datetime": datetime(2022, 7, 20, 20, 0, 0).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_datetime": (datetime.utcnow() + timedelta(days=20)).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
     },
 }
 
@@ -285,7 +295,7 @@ def test_search_banner(client, user):
     assert result_list[1]["message"] == "banner2"
 
 
-def test_search_banner_with_params(client, user):
+def test_search_banner_with_query_string(client, user):
     """Search for banners with the query string."""
     # create banners first
     BannerModel.create(banners["banner1"])
@@ -302,14 +312,6 @@ def test_search_banner_with_params(client, user):
     result_hits = banners_result["hits"]
     assert result_hits["total"] == 1
     assert result_hits["hits"][0]["message"] == "banner3"
-
-    # filter by bool(active)
-    query_string = {"q": "false"}
-    banners_result = _search_banners(client, 200, query_string).json
-
-    result_hits = banners_result["hits"]
-    assert result_hits["total"] == 1
-    assert result_hits["hits"][0]["message"] == "banner2"
 
     # filter by datetime(start_datetime)
     query_string = {"q": "2023-1-20"}
@@ -373,6 +375,37 @@ def test_search_banner_with_params(client, user):
     assert result_hits["total"] == 3
     assert result_hits["hits"][0]["message"] == "banner1"
     assert result_hits["hits"][1]["message"] == "banner2"
+
+
+def test_search_banner_with_query_params(client, user):
+    """Search for banners with the query params."""
+    # create banners first
+    BannerModel.create(banners["banner1"])
+    BannerModel.create(banners["banner2"])
+    BannerModel.create(banners["banner3"])
+    BannerModel.create(banners["everywhere_banner"])
+
+    user.login(client)
+
+    query_params = {"active": "true"}
+    banners_result = _search_banners(client, 200, query_params).json
+    result_hits = banners_result["hits"]
+    assert result_hits["total"] == 3
+
+    query_params = {"active": "true", "url_path": "/banner1"}
+    banners_result = _search_banners(client, 200, query_params).json
+    result_hits = banners_result["hits"]
+    assert result_hits["total"] == 2
+
+    query_params = {"url_path": "/banner2"}
+    banners_result = _search_banners(client, 200, query_params).json
+    result_hits = banners_result["hits"]
+    assert result_hits["total"] == 2
+
+    query_params = {"active": "true", "url_path": "/banner2"}
+    banners_result = _search_banners(client, 200, query_params).json
+    result_hits = banners_result["hits"]
+    assert result_hits["total"] == 1
 
 
 def test_search_banner_empty_list(client, user):
