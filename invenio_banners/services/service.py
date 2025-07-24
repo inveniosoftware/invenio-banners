@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2022-2023 CERN.
+# Copyright (C) 2022-2025 CERN.
 # Copyright (C) 2024 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
@@ -15,7 +15,7 @@ from invenio_db.uow import unit_of_work
 from invenio_records_resources.services import RecordService
 from invenio_records_resources.services.base import LinksTemplate
 from invenio_records_resources.services.base.utils import map_search_params
-from sqlalchemy import func
+from sqlalchemy import and_, func, literal, or_
 
 from ..records.models import BannerModel
 
@@ -40,11 +40,25 @@ class BannerService(RecordService):
         """Search for banners matching the querystring."""
         self.require_permission(identity, "search")
 
+        active_filter_param = params.pop("active", None)
+        url_path_filter_param = params.pop("url_path", None)
         search_params = map_search_params(self.config.search, params)
 
-        query_param = search_params["q"]
-        filters = []
+        and_filters = []
+        if active_filter_param is not None:
+            and_filters.append(BannerModel.active.is_(active_filter_param))
 
+        if url_path_filter_param is not None:
+            print(url_path_filter_param)
+            and_filters.append(
+                or_(
+                    BannerModel.url_path == "",
+                    literal(url_path_filter_param).like(BannerModel.url_path + "%"),
+                )
+            )
+
+        filters = [and_(*and_filters)] if and_filters else []
+        query_param = search_params["q"]
         if query_param:
             filters.extend(
                 [
@@ -53,13 +67,6 @@ class BannerService(RecordService):
                     BannerModel.category.ilike(f"%{query_param}%"),
                 ]
             )
-            bool_value = self._validate_bool(query_param)
-            if bool_value is not None:
-                filters.extend(
-                    [
-                        BannerModel.active.is_(bool_value),
-                    ]
-                )
 
             datetime_value = self._validate_datetime(query_param)
             if datetime_value is not None:
