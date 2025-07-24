@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2022-2024 CERN.
+# Copyright (C) 2022-2025 CERN.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -19,6 +19,8 @@ class BannerServerSearchRequestArgsSchema(SearchRequestArgsSchema):
     """Banner request parameters."""
 
     sort_direction = ma.fields.Str()
+    active = ma.fields.Bool()
+    url_path = ma.fields.Str()
 
 
 class BannerResourceConfig(RecordResourceConfig):
