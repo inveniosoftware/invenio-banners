@@ -8,7 +8,7 @@
 
 """Models."""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 import sqlalchemy as sa
 from flask import current_app
@@ -90,7 +90,7 @@ class BannerModel(db.Model, Timestamp):
     @classmethod
     def get_active(cls, url_path):
         """Return active banners."""
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
 
         query = (
             db.session.query(cls)
@@ -130,7 +130,7 @@ class BannerModel(db.Model, Timestamp):
     @classmethod
     def disable_expired(cls):
         """Disable any old still active messages to keep everything clean."""
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
 
         query = (
             db.session.query(cls)

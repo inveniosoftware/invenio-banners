@@ -7,7 +7,7 @@
 
 """Test disable expired."""
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from invenio_banners.records.models import BannerModel
 
@@ -16,28 +16,28 @@ banners = {
         "message": "valid",
         "url_path": "/valid",
         "category": "warning",
-        "end_datetime": datetime.utcnow() + timedelta(days=1),
+        "end_datetime": datetime.now(timezone.utc) + timedelta(days=1),
         "active": True,
     },
     "everywhere": {
         "message": "everywhere",
         "url_path": None,
         "category": "info",
-        "start_datetime": datetime.utcnow() - timedelta(days=1),
+        "start_datetime": datetime.now(timezone.utc) - timedelta(days=1),
         "active": True,
     },
     "sub_records_only": {
         "message": "sub_records_only",
         "url_path": "/resources/sub",
         "category": "info",
-        "start_datetime": datetime.utcnow() - timedelta(days=1),
+        "start_datetime": datetime.now(timezone.utc) - timedelta(days=1),
         "active": True,
     },
     "expired": {
         "message": "expired",
         "url_path": "/expired",
         "category": "info",
-        "end_datetime": datetime.utcnow() - timedelta(days=1),
+        "end_datetime": datetime.now(timezone.utc) - timedelta(days=1),
         "active": True,
     },
 }

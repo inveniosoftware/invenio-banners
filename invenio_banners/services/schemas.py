@@ -22,7 +22,7 @@ class BannerSchema(BaseRecordSchema):
     category = fields.String(required=True, metadata={"default": "info"})
     start_datetime = fields.DateTime(
         required=True,
-        metadata={"default": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")},
+        metadata={"default": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")},
     )
     end_datetime = fields.DateTime(allow_none=True)
     active = fields.Boolean(required=True, metadata={"default": True})

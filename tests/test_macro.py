@@ -7,7 +7,7 @@
 
 """Test views."""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
 from flask import url_for
@@ -23,7 +23,7 @@ def _create_banner(message, category, url_path=None):
             "message": message,
             "category": category,
             "url_path": url_path,
-            "start_datetime": datetime.utcnow(),
+            "start_datetime": datetime.now(timezone.utc),
             "active": True,
         }
     )
