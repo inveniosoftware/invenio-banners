@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v5.2.0 (released 2025-08-06)
+
+- search: add query params active and url_path for search, add None as default value for filters
+- global: replace deprecated datetime utcnow() with now(timezone.utc)
+
 Version v5.1.1 (released 2025-07-22)
 
 - fix: mo files not included into build
