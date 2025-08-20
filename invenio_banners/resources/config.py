@@ -38,11 +38,6 @@ class BannerResourceConfig(RecordResourceConfig):
         "banner_id": ma.fields.String(),
     }
 
-    request_extra_args = {
-        "active": ma.fields.Boolean(),
-        "url_path": ma.fields.String(),
-    }
-
     request_search_args = BannerServerSearchRequestArgsSchema
 
     request_body_parsers = {"application/json": RequestBodyParser(JSONDeserializer())}
