@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2022-2025 CERN.
-# Copyright (C) 2024 Graz University of Technology.
+# Copyright (C) 2024-2025 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Banner Service API."""
 
-import distutils.util
 
 import arrow
 from invenio_db.uow import unit_of_work
@@ -18,6 +17,7 @@ from invenio_records_resources.services.base.utils import map_search_params
 from sqlalchemy import and_, func, literal, or_
 
 from ..records.models import BannerModel
+from ..utils import strtobool
 
 
 class BannerService(RecordService):
@@ -157,7 +157,7 @@ class BannerService(RecordService):
 
     def _validate_bool(self, value):
         try:
-            bool_value = distutils.util.strtobool(value)
+            bool_value = strtobool(value)
         except ValueError:
             return None
         return bool(bool_value)
