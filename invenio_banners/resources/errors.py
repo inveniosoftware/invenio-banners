@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2023 CERN.
-# Copyright (C) 2024 Graz University of Technology.
+# Copyright (C) 2024-2025 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -12,7 +12,18 @@ import marshmallow as ma
 from flask_resources import HTTPJSONException, create_error_handler
 from invenio_records_resources.errors import validation_error_to_list_errors
 
-from ..services.errors import BannerNotExistsError
+
+class BannerNotExistsError(Exception):
+    """Banner not found exception."""
+
+    def __init__(self, banner_id):
+        """Constructor."""
+        self.banner_id = banner_id
+
+    @property
+    def description(self):
+        """Exception's description."""
+        return f"Banner with id {self.banner_id} is not found."
 
 
 class HTTPJSONValidationException(HTTPJSONException):

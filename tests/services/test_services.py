@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2022-2025 CERN.
-# Copyright (C) 2024 Graz University of Technology.
+# Copyright (C) 2024-2025 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -16,7 +16,7 @@ from invenio_records_resources.services.errors import PermissionDeniedError
 
 from invenio_banners.proxies import current_banners_service as service
 from invenio_banners.records import BannerModel
-from invenio_banners.services.errors import BannerNotExistsError
+from invenio_banners.resources.errors import BannerNotExistsError
 
 banners = {
     "active": {
