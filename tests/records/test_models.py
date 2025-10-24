@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2020-2023 CERN.
+# Copyright (C) 2025 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -13,7 +14,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from invenio_banners.records.models import BannerModel
-from invenio_banners.services.errors import BannerNotExistsError
+from invenio_banners.resources.errors import BannerNotExistsError
 
 banners = {
     "valid": {

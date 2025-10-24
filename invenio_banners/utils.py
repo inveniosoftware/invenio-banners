@@ -10,7 +10,7 @@
 
 from flask import request
 
-from invenio_banners.services.config import BannerModel
+from .records.models import BannerModel
 
 
 def get_active_banners_for_request():
