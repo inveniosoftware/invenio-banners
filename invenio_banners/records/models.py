@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2020-2023 CERN.
-# Copyright (C) 2024 Graz University of Technology.
+# Copyright (C) 2024-2025 Graz University of Technology.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -17,7 +17,7 @@ from sqlalchemy import or_
 from sqlalchemy.sql import text
 from sqlalchemy_utils.models import Timestamp
 
-from ..services.errors import BannerNotExistsError
+from ..resources.errors import BannerNotExistsError
 
 
 class BannerModel(db.Model, Timestamp):
