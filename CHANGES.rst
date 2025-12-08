@@ -1,12 +1,21 @@
 ..
     Copyright (C) 2020-2024 CERN.
     Copyright (C) 2024-2025 Graz University of Technology.
+    Copyright (C) 2025      KTH Royal Institute of Technology.
 
     Invenio-Banners is free software; you can redistribute it and/or modify
     it under the terms of the MIT License; see LICENSE file for more details.
 
 Changes
 =======
+
+Version v5.2.1 (released 2025-12-08)
+
+- i18n: pulled translations Turkish language
+- fix: partially initialized module
+- compatibility(312): distutils removed
+- i18n: pulled translations finnish language
+- chore: remove unused variable `request_extra_args`
 
 Version v5.2.0 (released 2025-08-06)
 
