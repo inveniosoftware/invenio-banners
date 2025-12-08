@@ -35,7 +35,7 @@ class BannerResourceConfig(RecordResourceConfig):
     }
 
     request_view_args = {
-        "banner_id": ma.fields.String(),
+        "banner_id": ma.fields.Integer(),
     }
 
     request_search_args = BannerServerSearchRequestArgsSchema
