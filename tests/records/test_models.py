@@ -8,7 +8,6 @@
 
 """Test models."""
 
-
 from datetime import datetime, timedelta, timezone
 
 import pytest

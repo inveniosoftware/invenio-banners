@@ -7,6 +7,7 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Banner resource tests."""
+
 from datetime import date, datetime, timedelta, timezone
 
 import pytest
