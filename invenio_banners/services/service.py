@@ -8,7 +8,6 @@
 
 """Banner Service API."""
 
-
 import arrow
 from invenio_db.uow import unit_of_work
 from invenio_records_resources.services import RecordService

@@ -7,7 +7,6 @@
 
 """Records directory."""
 
-
 from .models import BannerModel
 
 __all__ = ("BannerModel",)
