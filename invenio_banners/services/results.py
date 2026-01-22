@@ -52,6 +52,15 @@ class BannerItem(RecordItem):
 
         return self._data
 
+    @property
+    def id(self):
+        """Override Record.id bc there is no BannerRecord actually.
+
+        There is only BannerModel (DB model)!
+        """
+        # self._record is the banner db instance!
+        return self._record.id
+
 
 class BannerList(RecordList):
     """List of banner results."""

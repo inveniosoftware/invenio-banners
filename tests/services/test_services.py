@@ -76,6 +76,8 @@ def test_banner_creation(app, superuser_identity):
     assert banner["url_path"] == banner_data["url_path"]
     assert banner["category"] == banner_data["category"]
     assert banner["active"] == banner_data["active"]
+    expected_links = {"self": f"https://127.0.0.1:5000/api/banners/{banner.id}"}
+    assert expected_links == banner.data["links"]
 
 
 def test_create_is_forbidden(app, simple_user_identity):
@@ -192,16 +194,30 @@ def test_search_banner_with_query_string(app, simple_user_identity):
     banner_list = service.search(simple_user_identity, params=search_params)
 
     assert banner_list.total == 2
-    result_list = banner_list.to_dict()["hits"]["hits"]
-    assert len(result_list) == 2
-    assert result_list[0]["message"] == "inactive"
-    assert result_list[1]["message"] == "active"
+    banner_list_dict = banner_list.to_dict()
+    hits = banner_list_dict["hits"]["hits"]
+    assert len(hits) == 2
+    assert hits[0]["message"] == "inactive"
+    assert hits[1]["message"] == "active"
+    expected_links = {
+        "self": f"https://127.0.0.1:5000/api/banners/?q=active&size=2&sort=end_datetime&sort_direction=desc",  # noqa
+    }
+    assert expected_links == banner_list_dict["links"]
 
+    # Size 1 test
     search_params["size"] = 1
+
     banner_list = service.search(simple_user_identity, params=search_params)
+
     assert banner_list.total == 2
-    result_list = banner_list.to_dict()["hits"]["hits"]
-    assert len(result_list) == 1
+    banner_list_dict = banner_list.to_dict()
+    hits = banner_list_dict["hits"]["hits"]
+    assert len(hits) == 1
+    expected_links = {
+        "self": f"https://127.0.0.1:5000/api/banners/?q=active&size=1&sort=end_datetime&sort_direction=desc",  # noqa
+        "next": f"https://127.0.0.1:5000/api/banners/?page=2&q=active&size=1&sort=end_datetime&sort_direction=desc",  # noqa
+    }
+    assert expected_links == banner_list_dict["links"]
 
 
 def test_search_banner_with_query_params(app, simple_user_identity):

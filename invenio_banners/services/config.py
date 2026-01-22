@@ -8,23 +8,17 @@
 """Banners Service configuration."""
 
 from invenio_i18n import gettext as _
-from invenio_records_resources.services import Link, RecordServiceConfig
-from invenio_records_resources.services.records.links import pagination_links
+from invenio_records_resources.services import (
+    EndpointLink,
+    RecordServiceConfig,
+    pagination_endpoint_links,
+)
 from sqlalchemy import asc, desc
 
 from ..records.models import BannerModel
 from .permissions import BannersPermissionPolicy
 from .results import BannerItem, BannerList
 from .schemas import BannerSchema
-
-
-class BannersLink(Link):
-    """Link variables setter for Banner links."""
-
-    @staticmethod
-    def vars(banner, vars):
-        """Variables for the URI template."""
-        vars.update({"id": banner.id})
 
 
 class SearchOptions:
@@ -79,7 +73,11 @@ class BannerServiceConfig(RecordServiceConfig):
 
     # links configuration
     links_item = {
-        "self": BannersLink("{+api}/banners/{id}"),
+        "self": EndpointLink(
+            "banners.read",
+            params=["banner_id"],
+            vars=lambda obj, vars: vars.update(banner_id=obj.id),
+        ),
     }
-    links_search = pagination_links("{+api}/banners{?args*}")
+    links_search = pagination_endpoint_links("banners.search")
     record_cls = BannerModel
