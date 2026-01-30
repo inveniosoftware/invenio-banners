@@ -1,6 +1,6 @@
 ..
     Copyright (C) 2020-2024 CERN.
-    Copyright (C) 2024-2025 Graz University of Technology.
+    Copyright (C) 2024-2026 Graz University of Technology.
     Copyright (C) 2025      KTH Royal Institute of Technology.
 
     Invenio-Banners is free software; you can redistribute it and/or modify
@@ -8,6 +8,14 @@
 
 Changes
 =======
+
+Version v6.0.0 (released 2026-01-30)
+
+- chore(setup): bump dependencies
+- refactor: use invenio-db Timestamp
+- validation: ensure `banner_id` is an Integer
+- fix(black): update style to match Black 26
+- refactor(links): replace Link usage by EndpointLink
 
 Version v5.2.1 (released 2025-12-08)
 
