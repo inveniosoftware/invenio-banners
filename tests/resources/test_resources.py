@@ -2,6 +2,7 @@
 #
 # Copyright (C) 2022-2025 CERN.
 # Copyright (C) 2024 Graz University of Technology.
+# Copyright (C) 2026 CESNET z.s.p.o.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -15,6 +16,7 @@ from invenio_db import db
 from invenio_records_resources.services.errors import PermissionDeniedError
 
 from invenio_banners.records import BannerModel
+from invenio_banners.services.schemas import BannerSchema
 
 banners = {
     "banner0": {
@@ -78,6 +80,12 @@ banners = {
 }
 
 
+def create_banner_model(serialized_banner_data):
+    """Convert serialized banner data to a BannerModel instance."""
+    model_data = BannerSchema().load(serialized_banner_data)
+    return BannerModel.create(model_data)
+
+
 def _create_banner(client, data, headers, status_code=None):
     """Send POST request."""
     result = client.post("/banners/", headers=headers, json=data)
@@ -137,7 +145,7 @@ def test_create_banner(client, admin, headers):
 def test_disable_expired_after_create_action(client, admin, headers):
     """Disable expired banners after a create a banner action."""
     # create banner first
-    banner0 = BannerModel.create(banners["banner0"])
+    banner0 = create_banner_model(banners["banner0"])
     assert banner0.active is True
     banner_data = banners["banner2"]
 
@@ -152,7 +160,7 @@ def test_disable_expired_after_create_action(client, admin, headers):
 def test_update_banner(client, admin, headers):
     """Update a banner."""
     # create banner first
-    banner = BannerModel.create(banners["banner1"])
+    banner = create_banner_model(banners["banner1"])
 
     admin.login(client)
 
@@ -174,8 +182,8 @@ def test_update_banner(client, admin, headers):
 def test_disable_expired_after_update_action(client, admin, headers):
     """Disable expired banners after an update a banner action."""
     # create banner first
-    banner0 = BannerModel.create(banners["banner0"])
-    banner2 = BannerModel.create(banners["banner2"])
+    banner0 = create_banner_model(banners["banner0"])
+    banner2 = create_banner_model(banners["banner2"])
     assert banner0.active is True
 
     admin.login(client)
@@ -196,7 +204,7 @@ def test_disable_expired_after_update_action(client, admin, headers):
 def test_update_is_forbidden(client, user, headers):
     """Test that the simple user cannot update a banner."""
     # create banner first
-    banner = BannerModel.create(banners["banner1"])
+    banner = create_banner_model(banners["banner1"])
 
     user.login(client)
 
@@ -222,7 +230,7 @@ def test_update_non_existing_banner(client, admin, headers):
 def test_delete_banner(client, admin, headers):
     """Delete a banner."""
     # create banner first
-    banner = BannerModel.create(banners["banner1"])
+    banner = create_banner_model(banners["banner1"])
 
     admin.login(client)
 
@@ -235,7 +243,7 @@ def test_delete_banner(client, admin, headers):
 def test_delete_is_forbidden(client, user, headers):
     """Test that the simple user cannot delete a banner."""
     # create banner first
-    banner = BannerModel.create(banners["banner1"])
+    banner = create_banner_model(banners["banner1"])
 
     user.login(client)
 
@@ -257,7 +265,7 @@ def test_delete_non_existing_banner(client, admin, headers):
 def test_read_banner(client, user):
     """Read a banner by id."""
     # create banner first
-    banner = BannerModel.create(banners["banner1"])
+    banner = create_banner_model(banners["banner1"])
 
     user.login(client)
 
@@ -281,8 +289,8 @@ def test_read_non_existing_banner(client, user):
 def test_search_banner(client, user):
     """Search for banners without query parameters."""
     # create banners first
-    BannerModel.create(banners["banner1"])
-    BannerModel.create(banners["banner2"])
+    create_banner_model(banners["banner1"])
+    create_banner_model(banners["banner2"])
 
     user.login(client)
 
@@ -299,9 +307,9 @@ def test_search_banner(client, user):
 def test_search_banner_with_query_string(client, user):
     """Search for banners with the query string."""
     # create banners first
-    BannerModel.create(banners["banner1"])
-    BannerModel.create(banners["banner2"])
-    BannerModel.create(banners["banner3"])
+    create_banner_model(banners["banner1"])
+    create_banner_model(banners["banner2"])
+    create_banner_model(banners["banner3"])
 
     user.login(client)
 
@@ -381,10 +389,10 @@ def test_search_banner_with_query_string(client, user):
 def test_search_banner_with_query_params(client, user):
     """Search for banners with the query params."""
     # create banners first
-    BannerModel.create(banners["banner1"])
-    BannerModel.create(banners["banner2"])
-    BannerModel.create(banners["banner3"])
-    BannerModel.create(banners["everywhere_banner"])
+    create_banner_model(banners["banner1"])
+    create_banner_model(banners["banner2"])
+    create_banner_model(banners["banner3"])
+    create_banner_model(banners["everywhere_banner"])
 
     user.login(client)
 
