@@ -10,6 +10,7 @@
 
 import marshmallow as ma
 from flask_resources import HTTPJSONException, create_error_handler
+from invenio_i18n import lazy_gettext as _
 from invenio_records_resources.errors import validation_error_to_list_errors
 
 
@@ -29,7 +30,7 @@ class BannerNotExistsError(Exception):
 class HTTPJSONValidationException(HTTPJSONException):
     """HTTP exception serializing to JSON and reflecting Marshmallow errors."""
 
-    description = "A validation error occurred."
+    description = _("A validation error occurred.")
 
     def __init__(self, exception):
         """Constructor."""
