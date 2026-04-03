@@ -2,6 +2,7 @@
 #
 # Copyright (C) 2022-2025 CERN.
 # Copyright (C) 2024-2025 Graz University of Technology.
+# Copyright (C) 2026 CESNET z.s.p.o.
 #
 # Invenio-Banners is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -20,6 +21,16 @@ from invenio_banners.resources.errors import BannerNotExistsError
 
 banners = {
     "active": {
+        # model layer
+        "message": "active",
+        "url_path": "/active",
+        "category": "info",
+        "start_datetime": datetime.now(timezone.utc),
+        "end_datetime": datetime.now(timezone.utc) + timedelta(days=1),
+        "active": True,
+    },
+    "active_serialized": {
+        # model layer
         "message": "active",
         "url_path": "/active",
         "category": "info",
@@ -69,7 +80,7 @@ banners = {
 
 def test_banner_creation(app, superuser_identity):
     """Create a banner."""
-    banner_data = banners["active"]
+    banner_data = banners["active_serialized"]
     banner = service.create(superuser_identity, banner_data)
 
     assert banner["message"] == banner_data["message"]
