@@ -8,6 +8,8 @@
 
 """Invenio administration banners view module."""
 
+from flask_principal import RoleNeed
+from invenio_access import Permission
 from invenio_administration.views.base import (
     AdminResourceCreateView,
     AdminResourceDetailView,
@@ -15,7 +17,9 @@ from invenio_administration.views.base import (
     AdminResourceListView,
 )
 from invenio_i18n import lazy_gettext as _
-
+from invenio_banners.permissions import banners_administration_access_action
+from invenio_administration.permissions import administration_access_action
+from functools import wraps
 
 class BannerListView(AdminResourceListView):
     """Search admin view."""
@@ -49,6 +53,7 @@ class BannerListView(AdminResourceListView):
     search_config_name = "BANNERS_SEARCH"
     search_sort_config_name = "BANNERS_SORT_OPTIONS"
 
+    permission = Permission(banners_administration_access_action, administration_access_action)
 
 common_form_fields = {
     "start_datetime": {
