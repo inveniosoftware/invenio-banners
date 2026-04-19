@@ -10,6 +10,7 @@
 Note: need to call python setup.py compile_catalog to compile the translations before
 running the tests.
 """
+
 import json
 from pathlib import Path
 
@@ -47,7 +48,6 @@ def admin_identity(admin):
 @pytest.fixture()
 def admin_client(db, client, admin):
     """Log in a user to the client."""
-
     login_user(admin.user, remember=True)
     login_user_via_session(client, email=admin.user.email)
 
@@ -55,6 +55,7 @@ def admin_client(db, client, admin):
 
 
 def add_to_manifest(manifest, filename):
+    """Add a file to the manifest."""
     manifest.setdefault("assets", {})[filename] = {"publicPath": filename}
     filename_without_ext = filename.rsplit(".", 1)[0]
     manifest.setdefault("chunks", {}).setdefault(filename_without_ext, []).append(
@@ -64,6 +65,7 @@ def add_to_manifest(manifest, filename):
 
 @pytest.fixture()
 def fake_manifest(app, instance_path):
+    """Create a fake manifest.json file for testing."""
     app.static_folder = str(Path(instance_path) / "static")
 
     manifest_path = Path(instance_path) / "static" / "dist" / "manifest.json"
@@ -89,8 +91,8 @@ def fake_manifest(app, instance_path):
 
 @pytest.fixture()
 def clear_babel_context():
+    """Clear the babel context to force reinitialization when language is switched."""
 
-    # force babel reinitialization when language is switched
     def _clear_babel_context():
         try:
             from flask import g
