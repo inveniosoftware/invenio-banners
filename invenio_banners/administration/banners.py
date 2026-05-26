@@ -102,9 +102,9 @@ common_form_fields = {
             "`Other` option displays a gray banner."
         ),
         "options": [
-            {"title_l10n": "Info", "id": "info"},
-            {"title_l10n": "Warning", "id": "warning"},
-            {"title_l10n": "Other", "id": "other"},
+            {"title_l10n": _("Info"), "id": "info"},
+            {"title_l10n": _("Warning"), "id": "warning"},
+            {"title_l10n": _("Other"), "id": "other"},
         ],
         "placeholder": "Select a category",
     },
@@ -134,8 +134,8 @@ class BannerEditView(AdminResourceEditView):
 
     form_fields = {
         **common_form_fields,
-        "created": {"order": 7},
-        "updated": {"order": 8},
+        "created": {"text": _("Created"), "order": 7},
+        "updated": {"text": _("Updated"), "order": 8},
     }
 
 
