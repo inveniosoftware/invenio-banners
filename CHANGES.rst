@@ -9,6 +9,12 @@
 Changes
 =======
 
+Version v7.0.0 (released 2026-05-29)
+
+- chore(setup): bump dependencies
+- fix(tests): alembic migration test
+- ui(translations): mark string as translatable
+
 Version v6.0.0 (released 2026-01-30)
 
 - chore(setup): bump dependencies
