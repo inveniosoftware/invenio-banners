@@ -5,9 +5,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 # 
 # Translators:
-# Alizee Pace <alizee.pace@gmail.com>, 2023
-# Fare Fare <fare@polito.it>, 2023
-# Tibor Simko <tibor.simko@cern.ch>, 2025
+# Suthep Yonphimai <tomztt@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
@@ -16,86 +14,86 @@ msgstr ""
 "Report-Msgid-Bugs-To: info@inveniosoftware.org\n"
 "POT-Creation-Date: 2026-06-22 20:46+0000\n"
 "PO-Revision-Date: 2023-06-30 09:38+0000\n"
-"Last-Translator: Tibor Simko <tibor.simko@cern.ch>, 2025\n"
-"Language-Team: Italian (https://app.transifex.com/inveniosoftware/teams/23537/it/)\n"
+"Last-Translator: Suthep Yonphimai <tomztt@gmail.com>, 2026\n"
+"Language-Team: Thai (https://app.transifex.com/inveniosoftware/teams/23537/th/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-"Language: it\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: invenio_banners/config.py:12
 msgid "Info"
-msgstr ""
+msgstr "ข้อมูล"
 
 #: invenio_banners/config.py:13
 msgid "Warning"
-msgstr "Attenzione"
+msgstr "คำเตือน"
 
 #: invenio_banners/config.py:14
 msgid "Other"
-msgstr ""
+msgstr "อื่นๆ"
 
 #: invenio_banners/administration/banners.py:39
 #: invenio_banners/administration/banners.py:82
 #: invenio_banners/administration/banners.py:174 invenio_banners/config.py:34
 msgid "URL path"
-msgstr ""
+msgstr "เส้นทาง URL"
 
 #: invenio_banners/config.py:38
 msgid "Start DateTime"
-msgstr ""
+msgstr "วันเวลาเริ่มต้น"
 
 #: invenio_banners/config.py:42
 msgid "End DateTime"
-msgstr ""
+msgstr "วันเวลาสิ้นสุด"
 
 #: invenio_banners/administration/banners.py:38
 #: invenio_banners/administration/banners.py:109
 #: invenio_banners/administration/banners.py:176 invenio_banners/config.py:46
 #: invenio_banners/services/config.py:50
 msgid "Active"
-msgstr "Attivo"
+msgstr "ใช้งานอยู่"
 
 #: invenio_banners/administration/banners.py:22
 #: invenio_banners/administration/banners.py:23
 msgid "Banners"
-msgstr ""
+msgstr "แบนเนอร์"
 
 #: invenio_banners/administration/banners.py:24
 msgid "Site management"
-msgstr ""
+msgstr "การจัดการเว็บไซต์"
 
 #: invenio_banners/administration/banners.py:34
 msgid "Id"
-msgstr "Id"
+msgstr "รหัส"
 
 #: invenio_banners/administration/banners.py:35
 msgid "Start time (UTC)"
-msgstr ""
+msgstr "เวลาเริ่มต้น (UTC)"
 
 #: invenio_banners/administration/banners.py:36
 msgid "End time (UTC)"
-msgstr ""
+msgstr "เวลาสิ้นสุด (UTC)"
 
 #: invenio_banners/administration/banners.py:37
 #: invenio_banners/administration/banners.py:74
 #: invenio_banners/administration/banners.py:173
 msgid "Message"
-msgstr "Messaggio"
+msgstr "ข้อความ"
 
 #: invenio_banners/administration/banners.py:40
 #: invenio_banners/administration/banners.py:94
 #: invenio_banners/administration/banners.py:175
 msgid "Category"
-msgstr ""
+msgstr "หมวดหมู่"
 
 #: invenio_banners/administration/banners.py:52
 #: invenio_banners/administration/banners.py:171
 #: invenio_banners/services/config.py:42
 msgid "Start time"
-msgstr ""
+msgstr "เวลาเริ่มต้น"
 
 #: invenio_banners/administration/banners.py:54
 msgid ""
@@ -103,17 +101,20 @@ msgid ""
 "to future date/time to delay the banner. Note: specify time in UTC time "
 "standard."
 msgstr ""
+"วันเวลาที่แบนเนอร์จะเริ่มแสดง รูปแบบ: yyyy-mm-dd hh:mm:ss "
+"ตั้งค่าเป็นวันเวลาในอนาคตเพื่อหน่วงเวลาแบนเนอร์ หมายเหตุ: ระบุเวลาในมาตรฐาน "
+"UTC"
 
 #: invenio_banners/administration/banners.py:59
 #: invenio_banners/administration/banners.py:70
 msgid "YYYY-MM-DD hh:mm:ss"
-msgstr ""
+msgstr "YYYY-MM-DD hh:mm:ss"
 
 #: invenio_banners/administration/banners.py:63
 #: invenio_banners/administration/banners.py:172
 #: invenio_banners/services/config.py:46
 msgid "End time"
-msgstr ""
+msgstr "เวลาสิ้นสุด"
 
 #: invenio_banners/administration/banners.py:65
 msgid ""
@@ -121,10 +122,13 @@ msgid ""
 "An empty value makes the banner active until manually disabled via the "
 "active flag. Note: specify time in UTC time standard."
 msgstr ""
+"วันเวลาที่แบนเนอร์จะหยุดแสดง รูปแบบ: yyyy-mm-dd hh:mm:ss "
+"ค่าว่างทำให้แบนเนอร์แสดงจนกว่าจะปิดใช้งานด้วยตนเอง หมายเหตุ: "
+"ระบุเวลาในมาตรฐาน UTC"
 
 #: invenio_banners/administration/banners.py:76
 msgid "Message to be displayed on the banner. HTML format is supported."
-msgstr ""
+msgstr "ข้อความที่จะแสดงบนแบนเนอร์ รองรับรูปแบบ HTML"
 
 #: invenio_banners/administration/banners.py:84
 msgid ""
@@ -133,51 +137,58 @@ msgid ""
 "with `/records` will return an active banner (`/records`, `/records/1234`, "
 "etc.). An empty value makes the banner active for any URL."
 msgstr ""
+"คำนำหน้าเส้นทาง URL (รวม / แรก) เพื่อกำหนดว่าข้อความจะแสดงที่ไหนบนไซต์ เช่น "
+"ถ้าใส่ `/records` URL ที่ขึ้นต้นด้วย `/records` จะแสดงแบนเนอร์ "
+"ค่าว่างทำให้แบนเนอร์แสดงทุก URL"
 
 #: invenio_banners/administration/banners.py:96
 msgid ""
 "Banner category. `Info` option displays a blue banner. `Warning` option "
 "displays an orange banner. `Other` option displays a gray banner."
 msgstr ""
+"หมวดหมู่แบนเนอร์ ตัวเลือก `Info` แสดงแบนเนอร์สีน้ำเงิน `Warning` แสดงสีส้ม "
+"`Other` แสดงสีเทา"
 
 #: invenio_banners/administration/banners.py:111
 msgid ""
 "Tick it to activate the banner: banner will be displayed according to "
 "start/end times. If not activated, start/end times will be ignored."
 msgstr ""
+"ทำเครื่องหมายเพื่อเปิดใช้งานแบนเนอร์ แบนเนอร์จะแสดงตามเวลาเริ่มต้น/สิ้นสุด "
+"หากไม่เปิดใช้งาน เวลาจะถูกละเว้น"
 
 #: invenio_banners/administration/banners.py:127
 msgid "Edit Banner"
-msgstr ""
+msgstr "แก้ไขแบนเนอร์"
 
 #: invenio_banners/administration/banners.py:146
 msgid "Create Banner"
-msgstr ""
+msgstr "สร้างแบนเนอร์"
 
 #: invenio_banners/administration/banners.py:162
 msgid "Banner Details"
-msgstr ""
+msgstr "รายละเอียดแบนเนอร์"
 
 #: invenio_banners/administration/banners.py:177
 msgid "Created"
-msgstr "Creato"
+msgstr "สร้างเมื่อ"
 
 #: invenio_banners/administration/banners.py:178
 msgid "Updated"
-msgstr ""
+msgstr "อัปเดตเมื่อ"
 
 #: invenio_banners/resources/errors.py:29
 msgid "A validation error occurred."
-msgstr ""
+msgstr "เกิดข้อผิดพลาดในการตรวจสอบ"
 
 #: invenio_banners/services/config.py:26
 msgid "Ascending"
-msgstr ""
+msgstr "จากน้อยไปมาก"
 
 #: invenio_banners/services/config.py:30
 msgid "Descending"
-msgstr ""
+msgstr "จากมากไปน้อย"
 
 #: invenio_banners/services/config.py:38
 msgid "Url path"
-msgstr ""
+msgstr "เส้นทาง URL"
