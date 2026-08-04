@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v8.0.2 (released 2026-08-04)
+
+- fix(build): include mo files
+- fix(ci): run tests on maint-*
+
 Version v8.0.1 (released 2026-07-02)
 
 - chore(setup): migrate build backend from setuptools to hatchling
