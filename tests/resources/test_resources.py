@@ -311,7 +311,7 @@ def test_search_banner_with_query_string(client, user):
     assert result_hits["hits"][0]["message"] == "banner3"
 
     # filter by datetime(start_datetime)
-    query_string = {"q": "2023-1-20"}
+    query_string = {"q": "2023-01-20"}
     banners_result = _search_banners(client, 200, query_string).json
 
     result_hits = banners_result["hits"]
