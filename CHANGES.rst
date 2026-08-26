@@ -7,6 +7,10 @@
 Changes
 =======
 
+Version v7.1.1 (released 2026-08-26)
+
+- i18n: pulled translations
+
 Version v7.1.0 (released 2026-07-28)
 
 - fix(ci): run tests on maint-*
