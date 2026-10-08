@@ -16,7 +16,10 @@ from invenio_i18n import lazy_gettext as _
 class BannerListView(AdminResourceListView):
     """Search admin view."""
 
-    api_endpoint = "/banners"
+    api_endpoint = "/banners"  # Deprecated
+    # api_endpoint_name simply points to endpoint that is basis for other
+    # endpoints of the resource
+    api_endpoint_name = "banners.search"
     name = "banners"
     resource_config = "banners_resource"
     title = _("Banners")
@@ -123,7 +126,8 @@ class BannerEditView(AdminResourceEditView):
     url = "/banners/<pid_value>/edit"
     resource_config = "banners_resource"
     pid_path = "id"
-    api_endpoint = "/banners"
+    api_endpoint = "/banners"  # Deprecated
+    api_endpoint_name = "banners.search"
     title = _("Edit Banner")
 
     list_view_name = "banners"
@@ -142,7 +146,9 @@ class BannerCreateView(AdminResourceCreateView):
     url = "/banners/create"
     resource_config = "banners_resource"
     pid_path = "id"
-    api_endpoint = "/banners"
+    api_endpoint = "/banners"  # Deprecated
+    api_endpoint_name = "banners.search"
+
     title = _("Create Banner")
 
     list_view_name = "banners"
@@ -156,7 +162,8 @@ class BannerDetailView(AdminResourceDetailView):
     """Admin banner detail view."""
 
     url = "/banners/<pid_value>"
-    api_endpoint = "/banners"
+    api_endpoint = "/banners"  # Deprecated
+    api_endpoint_name = "banners.search"
     name = "banner-details"
     resource_config = "banners_resource"
     title = _("Banner Details")
