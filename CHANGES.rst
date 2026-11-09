@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v9.0.0 (released 2026-11-10)
+
+- chore(setup): bump dependencies
+
 Version v8.0.2 (released 2026-08-04)
 
 - fix(build): include mo files
