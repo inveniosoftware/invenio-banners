@@ -4,7 +4,7 @@
 
 """Banner Service API."""
 
-import arrow
+import pendulum
 from invenio_db.uow import unit_of_work
 from invenio_records_resources.services import RecordService
 from invenio_records_resources.services.base import LinksTemplate
@@ -159,7 +159,7 @@ class BannerService(RecordService):
 
     def _validate_datetime(self, value):
         try:
-            date_value = arrow.get(value).date()
+            date_value = pendulum.parse(value).date()
         except ValueError:
             return None
         return date_value
