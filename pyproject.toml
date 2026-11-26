@@ -8,7 +8,7 @@
 name = "invenio-banners"
 description = "Invenio-Banners is a module used to create and show banners with useful messages to users."
 readme = "README.rst"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = "MIT"
 authors = [
   { name = "CERN", email = "info@inveniosoftware.org" },
